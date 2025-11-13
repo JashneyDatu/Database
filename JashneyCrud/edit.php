@@ -1,38 +1,32 @@
 <?php
-include "db/db_connect.php"; // include database connection
+include "db/db_connect.php"; 
 
-// Check if ID is provided in the URL
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Fetch student data by ID
     $sql = "SELECT * FROM students WHERE id = $id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $student = $result->fetch_assoc(); // fetch data
+        $student = $result->fetch_assoc(); 
     } else {
         echo "<div class='alert alert-danger text-center'>Student not found!</div>";
         exit;
     }
 }
 
-// Handle form update
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $student_no = $_POST['student_no']; 
     $fullname = $_POST['fullname']; 
     $course = $_POST['course']; 
     $year_lvl = $_POST['year_lvl']; 
 
-    // Update query
     $sql = "UPDATE students 
             SET student_no='$student_no', fullname='$fullname', course='$course', year_lvl='$year_lvl'
             WHERE id=$id";
 
     if ($conn->query($sql) === TRUE) {
         echo "<div class='alert alert-success text-center'>Student updated successfully!</div>";
-        // Optional: redirect back to index
-        // header("Location: index.php"); exit;
     } else {
         echo "<div class='alert alert-danger text-center'>Error: " . $conn->error . "</div>";
     }
@@ -44,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Edit Student</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -56,19 +49,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="card-body">
             <form method="POST">
-                <!-- Student Number -->
                 <div class="mb-3">
                     <label class="form-label">Student No.</label>
                     <input type="text" name="student_no" class="form-control" value="<?php echo $student['student_no']; ?>" required>
                 </div>
 
-                <!-- Fullname -->
                 <div class="mb-3">
                     <label class="form-label">Fullname</label>
                     <input type="text" name="fullname" class="form-control" value="<?php echo $student['fullname']; ?>" required>
                 </div>
 
-                <!-- Course Dropdown -->
                 <div class="mb-3">
                     <label class="form-label">Course</label>
                     <select name="course" class="form-select" required>
@@ -79,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                 </div>
 
-                <!-- Year Level Dropdown -->
                 <div class="mb-3">
                     <label class="form-label">Year Level</label>
                     <select name="year_lvl" class="form-select" required>
@@ -91,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                 </div>
 
-                <!-- Buttons -->
                 <div class="d-flex justify-content-between">
                     <a href="index.php" class="btn btn-secondary">Back</a>
                     <button type="submit" class="btn btn-primary">Update Student</button>

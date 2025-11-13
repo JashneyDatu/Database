@@ -1,14 +1,13 @@
 <?php
-include "db/db_connect.php"; // include database connection
+include "db/db_connect.php";
 
-// Handle form submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $student_no = $_POST['student_no']; 
     $fullname = $_POST['fullname']; 
     $course = $_POST['course']; 
     $year_lvl = $_POST['year_lvl']; 
-
-     // ✅ Check if student number already exists
+ 
      $check_sql = "SELECT student_no FROM students WHERE student_no = '$student_no'";
      $check_result = mysqli_query($conn, $check_sql);
 
@@ -17,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Student number <b>$student_no</b> already exists!
               </div>";
     } else {
-        // ✅ Insert query
         $sql = "INSERT INTO students (student_no, fullname, course, year_lvl) 
                 VALUES ('$student_no', '$fullname', '$course', 'year_lvl')";
 
@@ -35,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Create Student</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -47,19 +44,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="card-body">
             <form method="POST">
-                <!-- Student Number -->
                 <div class="mb-3">
                     <label class="form-label">Student No.</label>
                     <input type="text" name="student_no" class="form-control" required>
                 </div>
-
-                <!-- Fullname -->
                 <div class="mb-3">
                     <label class="form-label">Fullname</label>
                     <input type="text" name="fullname" class="form-control" required>
                 </div>
-
-                <!-- Course (Dropdown) -->
                 <div class="mb-3">
                     <label class="form-label">Course</label>
                     <select name="course" class="form-select" required>
@@ -70,13 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                 </div>
 
-                <!-- Year Level -->
                 <div class="mb-3">
                     <label class="form-label">Year Level</label>
                     <input type="text" name="year_lvl" class="form-control" placeholder="e.g. 1st Year" required>
                 </div>
 
-                <!-- Buttons -->
                 <div class="d-flex justify-content-between">
                     <a href="index.php" class="btn btn-secondary">Back</a>
                     <button type="submit" class="btn btn-success">Add Student</button>

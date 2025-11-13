@@ -1,15 +1,12 @@
 <?php
-include "db/db_connect.php"; // include database connection
+include "db/db_connect.php"; 
 
-// Check if ID is provided
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Delete query
     $sql = "DELETE FROM students WHERE id = $id";
 
     if ($conn->query($sql) === TRUE) {
-        // Redirect back to index after delete
         header("Location: index.php?msg=deleted");
         exit;
     } else {
